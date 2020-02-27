@@ -2,7 +2,7 @@ A aplicação consiste em guardar pontos geograficos e disponibilizar pesquisa p
 Usuario pode adicionar imagens, comentarios e favoritar os pontos geograficos.
 
 Subir o ambiente:
- Primeiramente faça o clone do repositorio e execute o build do container:
+ #Primeiramente faça o clone do repositorio e execute o build do container:
   ```
    git clone https://github.com/lucassempre/find`
   ```
@@ -74,17 +74,25 @@ Retorna os pontos que estão na categoria no raio especificado pelos paramametro
   ```
 Arquivos principais da aplicação:
  Basicamento toda a aplicação e regra de negocio se encontra aqui:
- ```find/api/snow/apps/points/rest_api/views/point_views.py   ```
- ```find/api/snow/apps/points/rest_api/serializers/point.py  ```
+ ```
+ find/api/snow/apps/points/rest_api/views/point_views.py  
+ ```
+ ```
+ find/api/snow/apps/points/rest_api/serializers/point.py 
+ ```
  O banco relacional é descrito aqui:
- ```find/api/snow/apps/points/models/point.py   ```
+ ```
+ find/api/snow/apps/points/models/point.py   
+ ```
  Interface para disponibilizar a pesquisa por distancia se encontra aqui:
- ```find/api/snow/apps/points/utils/redis.py   ```
+ ```
+ find/api/snow/apps/points/utils/redis.py   
+ ```
 
 Autenticação segue as definições:
-https://github.com/Tivix/django-rest-auth/
+#https://github.com/Tivix/django-rest-auth/
 
 Esqueleto da aplicação:
-https://be.skeletons.djangostars.com/
+#https://be.skeletons.djangostars.com/
 
  
