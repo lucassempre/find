@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  api_snow:
+    build:
+      context: ..
+      dockerfile: ./build/Dockerfile.api
+    depends_on:
+      - redis
+    ports:
+      - "8000:8000"
+  redis:
+    image: redis:latest
+    volumes:
+      - "./redis-data:/data"

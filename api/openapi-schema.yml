@@ -1,0 +1,2079 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: TODO
+paths:
+  /api/{version}/auth/logout/:
+    get:
+      operationId: ListLogouts
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+    post:
+      operationId: CreateLogout
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+  /api/{version}/auth/user/:
+    get:
+      operationId: RetrieveUserDetails
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - username
+                properties:
+                  pk:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+$
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    readOnly: true
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+    put:
+      operationId: UpdateUserDetails
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - username
+              properties:
+                username:
+                  type: string
+                  description: Required. 150 characters or fewer. Letters, digits
+                    and @/./+/-/_ only.
+                  pattern: ^[\w.@+-]+$
+                  maxLength: 150
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - username
+                properties:
+                  pk:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+$
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    readOnly: true
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+    patch:
+      operationId: PartialUpdateUserDetails
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                  description: Required. 150 characters or fewer. Letters, digits
+                    and @/./+/-/_ only.
+                  pattern: ^[\w.@+-]+$
+                  maxLength: 150
+                first_name:
+                  type: string
+                  maxLength: 30
+                last_name:
+                  type: string
+                  maxLength: 150
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - username
+                properties:
+                  pk:
+                    type: integer
+                    readOnly: true
+                  username:
+                    type: string
+                    description: Required. 150 characters or fewer. Letters, digits
+                      and @/./+/-/_ only.
+                    pattern: ^[\w.@+-]+$
+                    maxLength: 150
+                  email:
+                    type: string
+                    format: email
+                    readOnly: true
+                  first_name:
+                    type: string
+                    maxLength: 30
+                  last_name:
+                    type: string
+                    maxLength: 150
+  /api/{version}/me/point/:
+    get:
+      operationId: ListMyPoints
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - title
+                - text
+                - long_position
+                - lat_position
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  comment_count:
+                    type: string
+                    readOnly: true
+                  image:
+                    type: array
+                    items:
+                      required:
+                      - file
+                      properties:
+                        pk:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        file:
+                          type: string
+                  author:
+                    required: []
+                    properties:
+                      pk:
+                        type: integer
+                        readOnly: true
+                      email:
+                        type: string
+                        format: email
+                        maxLength: 254
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      last_name:
+                        type: string
+                        maxLength: 150
+                    type: object
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_active:
+                    type: boolean
+                  title:
+                    type: string
+                    maxLength: 100
+                  text:
+                    type: string
+                  long_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  lat_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  category:
+                    type: integer
+                    nullable: true
+    post:
+      operationId: CreateMyPoint
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - title
+              - text
+              - long_position
+              - lat_position
+              properties:
+                image:
+                  type: array
+                  items:
+                    required:
+                    - file
+                    properties:
+                      pk:
+                        type: string
+                        format: uuid
+                        readOnly: true
+                      file:
+                        type: string
+                is_active:
+                  type: boolean
+                title:
+                  type: string
+                  maxLength: 100
+                text:
+                  type: string
+                long_position:
+                  type: number
+                  multipleOf: 1.0e-07
+                  maximum: 1000
+                  minimum: -1000
+                lat_position:
+                  type: number
+                  multipleOf: 1.0e-07
+                  maximum: 1000
+                  minimum: -1000
+                category:
+                  type: integer
+                  nullable: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - title
+                - text
+                - long_position
+                - lat_position
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  comment_count:
+                    type: string
+                    readOnly: true
+                  image:
+                    type: array
+                    items:
+                      required:
+                      - file
+                      properties:
+                        pk:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        file:
+                          type: string
+                  author:
+                    required: []
+                    properties:
+                      pk:
+                        type: integer
+                        readOnly: true
+                      email:
+                        type: string
+                        format: email
+                        maxLength: 254
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      last_name:
+                        type: string
+                        maxLength: 150
+                    type: object
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_active:
+                    type: boolean
+                  title:
+                    type: string
+                    maxLength: 100
+                  text:
+                    type: string
+                  long_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  lat_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  category:
+                    type: integer
+                    nullable: true
+  /api/{version}/me/comment/:
+    get:
+      operationId: ListComments
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - text
+                - point
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  text:
+                    type: string
+                  point:
+                    type: string
+                  author:
+                    type: integer
+                    nullable: true
+    post:
+      operationId: CreateComment
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - text
+              - point
+              properties:
+                text:
+                  type: string
+                point:
+                  type: string
+                author:
+                  type: integer
+                  nullable: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - text
+                - point
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  text:
+                    type: string
+                  point:
+                    type: string
+                  author:
+                    type: integer
+                    nullable: true
+  /api/{version}/me/image/:
+    get:
+      operationId: ListFiles
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - file
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  file:
+                    type: string
+                  comment:
+                    type: string
+                    nullable: true
+                  point:
+                    type: string
+                    nullable: true
+    post:
+      operationId: CreateFile
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                comment:
+                  type: string
+                  nullable: true
+                point:
+                  type: string
+                  nullable: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - file
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  file:
+                    type: string
+                  comment:
+                    type: string
+                    nullable: true
+                  point:
+                    type: string
+                    nullable: true
+  /api/{version}/category/:
+    get:
+      operationId: ListCategorys
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - name
+                - points
+                properties:
+                  pk:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  public:
+                    type: boolean
+                  points:
+                    type: array
+                    items:
+                      type: string
+    post:
+      operationId: CreateCategory
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              - points
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                public:
+                  type: boolean
+                points:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - name
+                - points
+                properties:
+                  pk:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  public:
+                    type: boolean
+                  points:
+                    type: array
+                    items:
+                      type: string
+  /api/{version}/category/{id}/:
+    get:
+      operationId: RetrieveCategory
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - name
+                - points
+                properties:
+                  pk:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  public:
+                    type: boolean
+                  points:
+                    type: array
+                    items:
+                      type: string
+    put:
+      operationId: UpdateCategory
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              - points
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                public:
+                  type: boolean
+                points:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - name
+                - points
+                properties:
+                  pk:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  public:
+                    type: boolean
+                  points:
+                    type: array
+                    items:
+                      type: string
+    patch:
+      operationId: PartialUpdateCategory
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                public:
+                  type: boolean
+                points:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - name
+                - points
+                properties:
+                  pk:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  public:
+                    type: boolean
+                  points:
+                    type: array
+                    items:
+                      type: string
+    delete:
+      operationId: DestroyCategory
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - name
+                - points
+                properties:
+                  pk:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 100
+                  public:
+                    type: boolean
+                  points:
+                    type: array
+                    items:
+                      type: string
+  /api/{version}/comment/{id}/:
+    get:
+      operationId: RetrieveComment
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - text
+                - point
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  text:
+                    type: string
+                  point:
+                    type: string
+                  author:
+                    type: integer
+                    nullable: true
+    put:
+      operationId: UpdateComment
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - text
+              - point
+              properties:
+                text:
+                  type: string
+                point:
+                  type: string
+                author:
+                  type: integer
+                  nullable: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - text
+                - point
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  text:
+                    type: string
+                  point:
+                    type: string
+                  author:
+                    type: integer
+                    nullable: true
+    patch:
+      operationId: PartialUpdateComment
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                text:
+                  type: string
+                point:
+                  type: string
+                author:
+                  type: integer
+                  nullable: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - text
+                - point
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  text:
+                    type: string
+                  point:
+                    type: string
+                  author:
+                    type: integer
+                    nullable: true
+    delete:
+      operationId: DestroyComment
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - text
+                - point
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  text:
+                    type: string
+                  point:
+                    type: string
+                  author:
+                    type: integer
+                    nullable: true
+  /api/{version}/image/{id}/:
+    get:
+      operationId: RetrieveFile
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - file
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  file:
+                    type: string
+                  comment:
+                    type: string
+                    nullable: true
+                  point:
+                    type: string
+                    nullable: true
+    put:
+      operationId: UpdateFile
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                comment:
+                  type: string
+                  nullable: true
+                point:
+                  type: string
+                  nullable: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - file
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  file:
+                    type: string
+                  comment:
+                    type: string
+                    nullable: true
+                  point:
+                    type: string
+                    nullable: true
+    patch:
+      operationId: PartialUpdateFile
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                file:
+                  type: string
+                comment:
+                  type: string
+                  nullable: true
+                point:
+                  type: string
+                  nullable: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - file
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  file:
+                    type: string
+                  comment:
+                    type: string
+                    nullable: true
+                  point:
+                    type: string
+                    nullable: true
+    delete:
+      operationId: DestroyFile
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - file
+                properties:
+                  pk:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  file:
+                    type: string
+                  comment:
+                    type: string
+                    nullable: true
+                  point:
+                    type: string
+                    nullable: true
+  /api/{version}/point/{latitude}/{longitude}/radius/{radius}/:
+    get:
+      operationId: RetrieveMyPoint
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: latitude
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: longitude
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: radius
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - title
+                - text
+                - long_position
+                - lat_position
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  comment_count:
+                    type: string
+                    readOnly: true
+                  image:
+                    type: array
+                    items:
+                      required:
+                      - file
+                      properties:
+                        pk:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        file:
+                          type: string
+                  author:
+                    required: []
+                    properties:
+                      pk:
+                        type: integer
+                        readOnly: true
+                      email:
+                        type: string
+                        format: email
+                        maxLength: 254
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      last_name:
+                        type: string
+                        maxLength: 150
+                    type: object
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_active:
+                    type: boolean
+                  title:
+                    type: string
+                    maxLength: 100
+                  text:
+                    type: string
+                  long_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  lat_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  category:
+                    type: integer
+                    nullable: true
+  /api/{version}/point/{latitude}/{longitude}/radius/{radius}/category/{category}/:
+    get:
+      operationId: RetrieveMyPoint
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: latitude
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: longitude
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: radius
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: category
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - title
+                - text
+                - long_position
+                - lat_position
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  comment_count:
+                    type: string
+                    readOnly: true
+                  image:
+                    type: array
+                    items:
+                      required:
+                      - file
+                      properties:
+                        pk:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        file:
+                          type: string
+                  author:
+                    required: []
+                    properties:
+                      pk:
+                        type: integer
+                        readOnly: true
+                      email:
+                        type: string
+                        format: email
+                        maxLength: 254
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      last_name:
+                        type: string
+                        maxLength: 150
+                    type: object
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_active:
+                    type: boolean
+                  title:
+                    type: string
+                    maxLength: 100
+                  text:
+                    type: string
+                  long_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  lat_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  category:
+                    type: integer
+                    nullable: true
+  /api/{version}/point/{uuid}/:
+    get:
+      operationId: RetrievePoint
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: uuid
+        in: path
+        required: true
+        description: A UUID string identifying this point.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - title
+                - text
+                - long_position
+                - lat_position
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  comment_count:
+                    type: string
+                    readOnly: true
+                  image:
+                    type: array
+                    items:
+                      required:
+                      - file
+                      properties:
+                        pk:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        file:
+                          type: string
+                  author:
+                    required: []
+                    properties:
+                      pk:
+                        type: integer
+                        readOnly: true
+                      email:
+                        type: string
+                        format: email
+                        maxLength: 254
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      last_name:
+                        type: string
+                        maxLength: 150
+                    type: object
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_active:
+                    type: boolean
+                  title:
+                    type: string
+                    maxLength: 100
+                  text:
+                    type: string
+                  long_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  lat_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  category:
+                    type: integer
+                    nullable: true
+    put:
+      operationId: UpdatePoint
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: uuid
+        in: path
+        required: true
+        description: A UUID string identifying this point.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - title
+              - text
+              - long_position
+              - lat_position
+              properties:
+                image:
+                  type: array
+                  items:
+                    required:
+                    - file
+                    properties:
+                      pk:
+                        type: string
+                        format: uuid
+                        readOnly: true
+                      file:
+                        type: string
+                is_active:
+                  type: boolean
+                title:
+                  type: string
+                  maxLength: 100
+                text:
+                  type: string
+                long_position:
+                  type: number
+                  multipleOf: 1.0e-07
+                  maximum: 1000
+                  minimum: -1000
+                lat_position:
+                  type: number
+                  multipleOf: 1.0e-07
+                  maximum: 1000
+                  minimum: -1000
+                category:
+                  type: integer
+                  nullable: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - title
+                - text
+                - long_position
+                - lat_position
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  comment_count:
+                    type: string
+                    readOnly: true
+                  image:
+                    type: array
+                    items:
+                      required:
+                      - file
+                      properties:
+                        pk:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        file:
+                          type: string
+                  author:
+                    required: []
+                    properties:
+                      pk:
+                        type: integer
+                        readOnly: true
+                      email:
+                        type: string
+                        format: email
+                        maxLength: 254
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      last_name:
+                        type: string
+                        maxLength: 150
+                    type: object
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_active:
+                    type: boolean
+                  title:
+                    type: string
+                    maxLength: 100
+                  text:
+                    type: string
+                  long_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  lat_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  category:
+                    type: integer
+                    nullable: true
+    patch:
+      operationId: PartialUpdatePoint
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: uuid
+        in: path
+        required: true
+        description: A UUID string identifying this point.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                image:
+                  type: array
+                  items:
+                    required:
+                    - file
+                    properties:
+                      pk:
+                        type: string
+                        format: uuid
+                        readOnly: true
+                      file:
+                        type: string
+                is_active:
+                  type: boolean
+                title:
+                  type: string
+                  maxLength: 100
+                text:
+                  type: string
+                long_position:
+                  type: number
+                  multipleOf: 1.0e-07
+                  maximum: 1000
+                  minimum: -1000
+                lat_position:
+                  type: number
+                  multipleOf: 1.0e-07
+                  maximum: 1000
+                  minimum: -1000
+                category:
+                  type: integer
+                  nullable: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - title
+                - text
+                - long_position
+                - lat_position
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  comment_count:
+                    type: string
+                    readOnly: true
+                  image:
+                    type: array
+                    items:
+                      required:
+                      - file
+                      properties:
+                        pk:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        file:
+                          type: string
+                  author:
+                    required: []
+                    properties:
+                      pk:
+                        type: integer
+                        readOnly: true
+                      email:
+                        type: string
+                        format: email
+                        maxLength: 254
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      last_name:
+                        type: string
+                        maxLength: 150
+                    type: object
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_active:
+                    type: boolean
+                  title:
+                    type: string
+                    maxLength: 100
+                  text:
+                    type: string
+                  long_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  lat_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  category:
+                    type: integer
+                    nullable: true
+    delete:
+      operationId: DestroyPoint
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: uuid
+        in: path
+        required: true
+        description: A UUID string identifying this point.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - title
+                - text
+                - long_position
+                - lat_position
+                properties:
+                  uuid:
+                    type: string
+                    format: uuid
+                    readOnly: true
+                  comment_count:
+                    type: string
+                    readOnly: true
+                  image:
+                    type: array
+                    items:
+                      required:
+                      - file
+                      properties:
+                        pk:
+                          type: string
+                          format: uuid
+                          readOnly: true
+                        file:
+                          type: string
+                  author:
+                    required: []
+                    properties:
+                      pk:
+                        type: integer
+                        readOnly: true
+                      email:
+                        type: string
+                        format: email
+                        maxLength: 254
+                      first_name:
+                        type: string
+                        maxLength: 30
+                      last_name:
+                        type: string
+                        maxLength: 150
+                    type: object
+                    readOnly: true
+                  created:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  updated:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_active:
+                    type: boolean
+                  title:
+                    type: string
+                    maxLength: 100
+                  text:
+                    type: string
+                  long_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  lat_position:
+                    type: number
+                    multipleOf: 1.0e-07
+                    maximum: 1000
+                    minimum: -1000
+                  category:
+                    type: integer
+                    nullable: true
+  /api/{version}/auth/password/reset/:
+    post:
+      operationId: CreatePasswordReset
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - email
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - email
+                properties:
+                  email:
+                    type: string
+                    format: email
+  /api/{version}/auth/password/reset/confirm/:
+    post:
+      operationId: CreatePasswordResetConfirm
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - new_password1
+              - new_password2
+              - uid
+              - token
+              properties:
+                new_password1:
+                  type: string
+                  maxLength: 128
+                new_password2:
+                  type: string
+                  maxLength: 128
+                uid:
+                  type: string
+                token:
+                  type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - new_password1
+                - new_password2
+                - uid
+                - token
+                properties:
+                  new_password1:
+                    type: string
+                    maxLength: 128
+                  new_password2:
+                    type: string
+                    maxLength: 128
+                  uid:
+                    type: string
+                  token:
+                    type: string
+  /api/{version}/auth/login/:
+    post:
+      operationId: CreateLogin
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - password
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - password
+                properties:
+                  username:
+                    type: string
+                  email:
+                    type: string
+                    format: email
+                  password:
+                    type: string
+  /api/{version}/auth/password/change/:
+    post:
+      operationId: CreatePasswordChange
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - new_password1
+              - new_password2
+              properties:
+                new_password1:
+                  type: string
+                  maxLength: 128
+                new_password2:
+                  type: string
+                  maxLength: 128
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - new_password1
+                - new_password2
+                properties:
+                  new_password1:
+                    type: string
+                    maxLength: 128
+                  new_password2:
+                    type: string
+                    maxLength: 128
+  /api/{version}/auth/registration/:
+    post:
+      operationId: CreateRegister
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - username
+              - password1
+              - password2
+              properties:
+                username:
+                  type: string
+                  maxLength: 150
+                  minLength: 1
+                email:
+                  type: string
+                  format: email
+                password1:
+                  type: string
+                  writeOnly: true
+                password2:
+                  type: string
+                  writeOnly: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - username
+                properties:
+                  username:
+                    type: string
+                    maxLength: 150
+                    minLength: 1
+                  email:
+                    type: string
+                    format: email
+  /api/{version}/auth/registration/verify-email/:
+    post:
+      operationId: CreateVerifyEmail
+      parameters:
+      - name: version
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - key
+              properties:
+                key:
+                  type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                required:
+                - key
+                properties:
+                  key:
+                    type: string
