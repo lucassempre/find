@@ -87,6 +87,9 @@ class MyPointsList(ListCreateAPIView):
         return Point.objects.active().filter(author=self.request.user)
     filter_backends = [filters.SearchFilter]
     search_fields = ['title']
+    def perform_create(self, serializer):
+        instance = serializer.save(author=self.request.user)
+        GeoDb.set_point(instance.long_position, instance.lat_position, instance.pk)
 
 class CommentListCreateAPIView(ListCreateAPIView):
     """
