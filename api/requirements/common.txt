@@ -5,7 +5,7 @@
 #    pip-compile /tmp/tmp.be_skeleton_builder/api/requirements/common.in
 #
 django-environ==0.4.5
-django==2.2.4
+django==2.2.10
 djangorestframework==3.10.2
 gunicorn==19.9.0
 psycopg2-binary==2.8.3
