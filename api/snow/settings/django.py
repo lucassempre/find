@@ -10,8 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/
 """
 
-import os
-
+import os, datetime
 from .environment import env
 
 
@@ -148,3 +147,16 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 4,
     'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',)
 }
+
+
+JWT_AUTH = {
+    'JWT_PUBLIC_KEY': open(BASE_DIR + '/settings/jwtRS256.key.pub', 'rb').read(),
+    'JWT_PRIVATE_KEY': open(BASE_DIR + '/settings/jwtRS256.key', 'rb').read(),
+    'JWT_ALGORITHM': 'RS256',
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
+}
+
+#ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
+#openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
