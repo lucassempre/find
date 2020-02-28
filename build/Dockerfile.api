@@ -1,3 +1,4 @@
+FROM python:latest
 WORKDIR /api
 COPY build/docker-entrypoint-api.sh /api/
 COPY api/requirements/new_requirements.txt /api/new_requirements.txt
